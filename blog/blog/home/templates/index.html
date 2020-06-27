@@ -1,0 +1,825 @@
+﻿{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-52115242-17"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'UA-52115242-17');
+        6
+
+        function saveRequestPatent() {
+
+
+            var name = document.getElementById("demo-name").value;
+            var email = document.getElementById("demo-email").value;
+            var title = document.getElementById("demo-title").value;
+            var desc = document.getElementById("demo-description").value;
+            var claim = document.getElementById("demo-claim").value;
+            var ipc = document.getElementById("IPC").value;
+            var sector = document.getElementById("sector").value;
+
+            var data = {
+                'name': name,
+                'email': email,
+                'title': title,
+                'desc': desc,
+                'claim': claim,
+                'ipc': ipc,
+                'sector': sector
+            };
+            $.get("submit", data, function (response, textStatus) {
+                alert("Thanks for request, you will be informed by e-mail =)");
+                console.log(response)
+                console.log(textStatus)
+            });
+        }
+        {% if messages %}
+            {% for message in messages %}
+                alert("{{ message }}");
+            {% endfor %}
+        {% endif %}
+    </script>
+    <script>
+
+    </script>
+
+    <meta charset="utf-8">
+    <title>Patent Comparison System & Software </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bootstrap HTML template and UI kit by Medium Rare">
+    <!-- Begin loading animation -->
+    <style>
+        @keyframes hideLoader {
+            0% {
+                width: 100%;
+                height: 100%;
+            }
+            100% {
+                width: 0;
+                height: 0;
+            }
+        }
+
+        body > div.loader {
+            position: fixed;
+            background: white;
+            width: 100%;
+            height: 100%;
+            z-index: 1071;
+            opacity: 0;
+            transition: opacity .5s ease;
+            overflow: hidden;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body:not(.loaded) > div.loader {
+            opacity: 1;
+        }
+
+        body:not(.loaded) {
+            overflow: hidden;
+        }
+
+        body.loaded > div.loader {
+            animation: hideLoader .5s linear .5s forwards;
+        }
+
+        .loading-animation {
+            width: 40px;
+            height: 40px;
+            margin: 100px auto;
+            background-color: #009B72;
+            border-radius: 100%;
+            animation: pulse 1s infinite ease-in-out
+        }
+
+        @keyframes pulse {
+            0% {
+                -webkit-transform: scale(0);
+                transform: scale(0)
+            }
+            100% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 0
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        window.addEventListener("load", function () {
+            document.querySelector('body').classList.add('loaded');
+        });
+    </script>
+    <!-- End loading animation -->
+    <link href="{% static '/css/theme.min.css' %}" rel="stylesheet" type="text/css" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,400i,600,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="loader">
+    <div class="loading-animation"></div>
+</div>
+<!-- <div class="alert alert-dismissible d-none d-md-block bg-primary-3 text-white py-4 py-md-3 px-0 mb-0 rounded-0 border-0">
+<div class="container">
+    <div class="row no-gutters align-items-md-center justify-content-center">
+        <div class="col-lg-11 col-md d-flex flex-column flex-md-row align-items-md-center justify-content-lg-center">
+            <div class="mb-3 mb-md-0"><strong>Intro Sale</strong> $10 per license for Jumpstart's launch. Act fast, ends soon.</div>
+            <a class="btn btn-sm btn-success ml-md-3" target="_blank" href=https://themeforest.net/item/jumpstart-app-and-software-template/24207799>Redeem Offer</a>
+        </div>
+        <div class="col-auto position-absolute right">
+            <button type="button" class="close p-0 position-relative" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    <img src="assets/img/icons/interface/icon-x.svg" alt="Close" class="icon icon-sm bg-white" data-inject-svg>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>
+</div> -->
+<p>{{ request.user.username }}</p>
+<div class="navbar-container">
+    <nav class="navbar navbar-expand-lg navbar-light" data-overlay="" data-sticky="top">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-dynamic-color fade-page" href="index.html">
+                <img alt="Jumpstart" data-inject-svg="" src="{% static '/img/logos/jumpstart.svg' %}"/>
+            </a>
+            <div class="d-flex align-items-center order-lg-3">
+                <button aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                        data-target=".navbar-collapse" data-toggle="collapse" type="button">
+                    <img alt="Navbar Toggler Open Icon" class="navbar-toggler-open icon icon-sm" data-inject-svg=""
+                         src="{% static '\img\icons\interface\icon-menu.svg' %}"/>
+                    <img alt="Navbar Toggler Close Icon" class="navbar-toggler-close icon icon-sm" data-inject-svg=""
+                         src="{% static '\img\icons\interface\icon-x.svg' %}"/>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse order-3 order-lg-2 justify-content-lg-end" id="navigation-menu">
+                <ul class="navbar-nav my-3 my-lg-0">
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a aria-expanded="false" aria-haspopup="true"
+                               class="dropdown-toggle nav-link nav-item arrow-bottom" data-toggle="dropdown-grid"
+                               href="#" role="button">Patent</a>
+                            <div class="row dropdown-menu">
+                                <div class="col-auto" data-dropdown-content="">
+                                    <div class="dropdown-grid-menu">
+                                        <a href="{% url 'patent_one_view' %}" class="dropdown-item fade-page">What is a
+                                            Patent?</a>
+                                        <a href="{% url 'patent_second_view' %}" class="dropdown-item fade-page">Why
+                                            should I get a patent?</a>
+                                        <a href="{% url 'patent_third_view' %}" class="dropdown-item fade-page">How to
+                                            Compare Patent Content ?</a>
+                                        <a href="{% url 'patent_fourth_view' %}" class="dropdown-item fade-page">Patent
+                                            Classification</a>
+                                        <a href="{% url 'patent_fifth_view' %}" class="dropdown-item fade-page">Sample
+                                            Patent</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link nav-item arrow-bottom"
+                           href="{% url 'our_vision_view' %}" role="button">Our Vision and Mission</a>
+                    </li>
+                    <li class="nav-item">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link nav-item arrow-bottom"
+                           href="{% url 'who_we_are_view' %}" role="button">Who We Are ?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link nav-item arrow-bottom"
+                           href="{% url 'contact_view' %}" role="button">Contact</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a aria-expanded="false" aria-haspopup="true" class="nav-link nav-item arrow-bottom"
+                               href="{% url 'logout' %}" role="button">Logout</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div data-overlay="" class="o-hidden">
+    <section class="pb-0">
+        <div class="container">
+            <div class="row justify-content-center text-center min-vh-40 d-flex flex-column align-items-center">
+                <div class="col-md-10 col-lg-9 col-xl-8" data-aos="fade-up">
+                    <h1 class="display-3">PATENT COMPARISON SYSTEM<br>
+                        <mark><span data-typed-text="" data-loop="true" data-type-speed="90"
+                                    data-strings='["Easy to use","Detailed reporting","Reliable system"]'></span></mark>
+                    </h1>
+                    <p class="lead px-xl-5"></p>
+                    <div class="d-flex flex-column flex-sm-row mt-4 mt-md-5 justify-content-center" data-aos="fade-up"
+                         data-aos-delay="300">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="position-absolute bottom left w-50 h-50 d-none d-md-block" data-jarallax-element="-24 48">
+            <div class="blob bg-gradient w-50 h-100 bottom left"></div>
+        </div>
+        <div class="position-absolute top right w-50 h-50 d-none d-md-block" data-jarallax-element="48">
+            <div class="blob blob-2 bg-gradient w-50 h-50 top right"></div>
+        </div>
+        <div class="divider divider-bottom bg-primary-3"></div>
+    </section>
+</div>
+<section class="bg-primary-3 text-white">
+    <div class="container">
+        <div class="row justify-content-around align-items-center">
+            <div class="col-lg-6 col-xl-5 mb-4 mb-sm-5 mb-lg-0">
+                <div class="text-white text-center text-lg-left mb-4 mb-xl-5" data-aos="fade-up">
+                    <h1 class="display-3">Fast and Basic Reporting</h1>
+                    <p class="lead">By saving time, you can compare your patents.
+                    </p>
+                </div>
+            </div>
+            <div class="divider divider-bottom bg-primary-3 mt-5"></div>
+
+        <div class="col-lg-6 col-xl-5 col-md-9" data-aos="fade-left" data-aos-delay="250">
+            <div class="card card-body shadow-lg">
+                <form data-form-email="" action="{% url 'home_view' %}" novalidate="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input id="name" name="name" type="text" class="form-control" placeholder="Your Name"
+                               required="">
+                        <div class="invalid-feedback">
+                            Please type your name.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input id="email" name="email" type="email" class="form-control"
+                               placeholder="youasfsadfdsa@yoursite.com" required="">
+                        <div class="invalid-feedback">
+                            Please provide your email address.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Patent Title</label>
+                        <input id="title" name="title" type="text" class="form-control" placeholder="Patent Title"
+                               required="">
+                        <div class="invalid-feedback">
+                            Please provide your Patent Title.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="desc">Patent Description</label>
+                        <input id="desc" name="desc" type="text" class="form-control" placeholder="Patent Description"
+                               required="">
+                        <div class="invalid-feedback">
+                            Please provide your Patent Description.
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="claim">Patent Claim Text</label>
+                        <input id="claim" name="claim" type="text" class="form-control" placeholder="Patent Claim Text"
+                               required="">
+                        <div class="invalid-feedback">
+                            Please provide your Patent Claim Text.
+                        </div>
+                        <div class="form-group">
+                            <label for="contact_message">Message</label>
+                            <textarea id="contact_message" name="contact_message" rows="10" class="form-control"
+                                      required=""></textarea>
+                            <div class="invalid-feedback">
+                                Please tell us a little more.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="demo-budget">Approximate Budget</label>
+                            <div class="position-relative">
+                                <select id="IPC" name="ipc" class="custom-select" id="demo-budget" required="">
+                                    <option value="">IPC</option>
+                                    <option value="A"> A Human Necessities</option>
+                                    <option value="B">B Performing Operations; Transporting</option>
+                                    <option value="C">C Chemistry; Metallurgy</option>
+                                    <option value="D">D Textiles; Paper</option>
+                                    <option value="E">E Fixed Constructions</option>
+                                    <option value="25-35-">Giyim</option>
+                                    <option value="F">F Mechanical Engineering; Lighting; Heating; Weapons; Blasting
+                                        Engines or Pumps
+                                    </option>
+                                    <option value="G">G Physics</option>
+                                    <option value="H">H Electricity</option>
+
+                                </select>
+                                <img src="{% static '\img\icons\interface\icon-caret-down.svg' %}" alt="Arrow Down"
+                                     class="icon icon-sm">
+                                <div class="invalid-feedback">
+                                    Please provide your approximate budget.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="demo-budget">Approximate Budget</label>
+                            <div class="position-relative">
+                                <select id="sector" name="sector" class="custom-select" id="demo-budget" required="">
+                                    <option value="">Sector</option>
+                                    <option value="43">Lokmacılar</option>
+                                    <option value="43">Çiğ Köfteciler</option>
+                                    <option value="43">Cafe / Restaurant / Yeme-İçme</option>
+                                    <option value="29-30-31-32-33-34-35-43-">Gıda Üretim Satış</option>
+                                    <option value="20-35-">Mobilya</option>
+                                    <option value="25-35-">Giyim</option>
+                                    <option value="22-23-24-25-26-27-35-">Tekstil / Halı / Dokuma / Deri / İp</option>
+                                    <option value="6-7-8-12-35-">Metal / Makina / Otomasyon / Otomotiv</option>
+                                    <option value="1-2-3-4-5-9-17-19-21-22-">Kimya / Plastik / Cam</option>
+                                    <option value="7-8-9-11-35-42-">Elektrik / Elektronik</option>
+                                    <option value="6-19-37-">İnşaat / İnşaat Malzemeleri / Madencilik</option>
+                                    <option value="9-16-35-41-42-">Bilişim / Tasarım / Basım / Yayın</option>
+                                    <option value="3-5-10-35-44-">Sağlık / Güzellik / Kozmetik</option>
+                                    <option value="37">Tamir / Servis / Kurulum</option>
+                                    <option value="35-36-37-38-39-40-41-42-43-44-45-">Tüm Hizmet Sektörleri</option>
+                                    <option value="1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30-31-32-33-34-35-">
+                                        Tüm Ürün Sektörleri
+                                    </option>
+                                    <option value="1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30-31-32-33-34-35-36-37-38-39-40-41-42-43-44-45-">
+                                        Tüm Sektörlerin Hepsi
+                                    </option>
+
+                                </select>
+                                <img src="{% static '\img\icons\interface\icon-caret-down.svg' %}" alt="Arrow Down"
+                                     class="icon icon-sm">
+                                <div class="invalid-feedback">
+                                    Please provide your approximate budget.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-none alert alert-success w-100 my-md-3" role="alert" data-success-message="">
+                            Thanks, a member of our team will be in touch shortly.
+                        </div>
+                        <div class="d-none alert alert-danger w-100 my-md-3" role="alert" data-error-message="">
+                            Please fill all fields correctly.
+                        </div>
+                        <div data-recaptcha="" data-sitekey="6Lemz4gUAAAAAElq4ZHFBzI7j8QUiYMn9I0mzQWG"
+                             data-size="invisible" data-badge="bottomleft"></div>
+                        <button type="submit" name="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</section>
+<section class="bg-light o-hidden">
+    <div class="container">
+        <div class="row section-title justify-content-center text-center">
+            <div class="col-md-9 col-lg-8 col-xl-7">
+                <h2 class="display-4">How to Compare Patent Content ?
+                </h2>
+                <div class="lead"></div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-around">
+            <div class="col-md-9 col-lg-5 aos-init aos-animate" data-aos="fade-in">
+                <img src="{% static '\img\2.jpg' %}" alt="Image" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-md-9 col-lg-6 col-xl-5 mt-4 mt-md-5 mt-lg-0">
+                <ol class="list-unstyled p-0">
+                    <li class="d-flex align-items-start my-4 my-md-5">
+                        <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center bg-success">
+                            <div class="position-absolute text-white h5 mb-0">1</div>
+                        </div>
+                        <div class="ml-3 ml-md-4">
+                            <h4>Create account</h4>
+                            <p>
+                                We create an account from our create account page.
+                            </p>
+                            <a href="{% url 'sign_in_view' %}">Create one now</a>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start my-4 my-md-5">
+                        <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center bg-success">
+                            <div class="position-absolute text-white h5 mb-0">2</div>
+                        </div>
+                        <div class="ml-3 ml-md-4">
+                            <h4>Enter your patent information</h4>
+                            <p>
+                                At this stage, you can use detailed or simple search options.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-start my-4 my-md-5">
+                        <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center bg-success">
+                            <div class="position-absolute text-white h5 mb-0">3</div>
+                        </div>
+                        <div class="ml-3 ml-md-4">
+                            <h4>Wait for the result!</h4>
+                            <p>
+                                After that, it is up to the advanced algorithms of our system. Just wait for your email
+                                :)
+                            </p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="p-0">
+    <div class="divider divider-top bg-light transform-flip-x"></div>
+    <div class="container">
+        <div class="row section-title justify-content-center text-center">
+            <div class="col-md-9 col-lg-8 col-xl-7">
+                <h3 class="display-4">FAQ</h3>
+                <div class="lead">Frequently asked questions for patent comparison.</div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div id="faq-accordion">
+                    <div class="card mb-2 mb-md-3">
+                        <a href="#accordion-1" data-toggle="collapse" role="button" aria-expanded="false"
+                           class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 mr-2">How soon will the final report reach me?</h6>
+                                <img src="{% static '\img\icons\interface\icon-caret-right.svg' %}" alt="Caret Right"
+                                     class="icon icon-sm" data-inject-svg="">
+                            </div>
+                        </a>
+                        <div class="collapse" id="accordion-1" data-parent="#faq-accordion">
+                            <div class="px-3 px-md-4 pb-3 pb-md-4">
+                                The system will examine the documents you sent us, and we will get back to you as soon
+                                as possible.
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-2 mb-md-3">
+                        <a href="#accordion-2" data-toggle="collapse" role="button" aria-expanded="false"
+                           class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 mr-2">What is the patent system?</h6>
+                                <img src="{% static '\img\icons\interface\icon-caret-right.svg' %}" alt="Caret Right"
+                                     class="icon icon-sm" data-inject-svg="">
+                            </div>
+                        </a>
+                        <div class="collapse" id="accordion-2" data-parent="#faq-accordion">
+                            <div class="px-3 px-md-4 pb-3 pb-md-4">
+                                The system that helps the development of the industry in order to encourage the
+                                implementation of innovations and inventions and to apply them to the industry, and to
+                                encourage those who work on this subject by giving privileges to the industry for a
+                                certain period of time, is called a patent system.
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-2 mb-md-3">
+                        <a href="#accordion-3" data-toggle="collapse" role="button" aria-expanded="false"
+                           class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 mr-2">How long is the patent registration lifetime?</h6>
+                                <img src="{% static '\img\icons\interface\icon-caret-right.svg' %}" alt="Caret Right"
+                                     class="icon icon-sm" data-inject-svg="">
+                            </div>
+                        </a>
+                        <div class="collapse" id="accordion-3" data-parent="#faq-accordion">
+                            <div class="px-3 px-md-4 pb-3 pb-md-4">
+                                Patents without examination have 7 years of patents from the date of application and
+                                create rights for 20 years from the date of application. At the end of these periods,
+                                the invention becomes public domain.
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-2 mb-md-3">
+                        <a href="#accordion-4" data-toggle="collapse" role="button" aria-expanded="false"
+                           class="p-3 p-md-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 mr-2">How to tell if a product is like a patented product?</h6>
+                                <img src="{% static '\img\icons\interface\icon-caret-right.svg' %}" alt="Caret Right"
+                                     class="icon icon-sm" data-inject-svg="">
+                            </div>
+                        </a>
+                        <div class="collapse" id="accordion-4" data-parent="#faq-accordion">
+                            <div class="px-3 px-md-4 pb-3 pb-md-4">
+                                Even if a product is manufactured with a different design in terms of its
+                                patent-protected functions or another product image, the imitation status will be fixed.
+                                If the patent has protected a production method, the sameness of the production method
+                                will be sought rather than the product produced.
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4 mt-md-5">
+            <div class="col-auto">
+
+            </div>
+        </div>
+    </div>
+    <div class="divider divider-bottom bg-primary-3"></div>
+</section>
+<section class="bg-primary">
+    <div class="container">
+        <div class="text-white">
+            <div class="row section-title justify-content-center text-center">
+                <div class="col-md-9 col-lg-8 col-xl-7">
+                    <h3 class="display-4">Customers love us</h3>
+                    <div class="lead">-</div>
+                </div>
+            </div>
+        </div>
+        <div class="row" data-isotope-collection="" data-ignore-hash="true">
+            <div class="col-sm-6 col-lg-4 mb-3 mb-md-4" data-isotope-item="">
+                <div class="card card-body">
+                    <p>&ldquo;It's
+                        <mark data-aos='highlight-text' data-aos-delay='200'>the best theme I've ever purchased.</mark>
+                        Excellent and easy code, excellent design.&rdquo;
+                    </p>
+                    <div class="d-flex">
+                        <img src="{% static '\img\avatars\envato.svg' %}" alt="Themeforest">
+                        <div class="ml-3">
+                            <h6 class="mb-0">felipelobo328</h6>
+                            <div>Themeforest Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 mb-3 mb-md-4" data-isotope-item="">
+                <div class="card card-body">
+                    <p>&ldquo;The
+                        <mark data-aos='highlight-text' data-aos-delay='200'>code is very well organized</mark>
+                        and as a front-end developer, for me it's essential&rdquo;
+                    </p>
+                    <div class="d-flex">
+                        <img src="{% static '\img\avatars\envato.svg' %}" alt="Themeforest">
+                        <div class="ml-3">
+                            <h6 class="mb-0">theus</h6>
+                            <div>Themeforest Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 mb-3 mb-md-4" data-isotope-item="">
+                <div class="card card-body">
+                    <p>&ldquo;I like the plethora of interchangeable blocks and individual elements. This is a great and
+                        flexible bundle. And for the price, totally worth it. Also a
+                        <mark data-aos='highlight-text' data-aos-delay='200'>big shoutout to Craig and James for their
+                            quick and helpful support.
+                        </mark>&rdquo;
+                    </p>
+                    <div class="d-flex">
+                        <img src="{% static '\img\avatars\envato.svg' %}" alt="Themeforest">
+                        <div class="ml-3">
+                            <h6 class="mb-0">garyhorsman</h6>
+                            <div>Themeforest Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 mb-3 mb-md-4" data-isotope-item="">
+                <div class="card card-body">
+                    <p>&ldquo;This is a superb product with very
+                        <mark data-aos='highlight-text' data-aos-delay='200'>nice designs and clean code.</mark>
+                        Using it is a breeze. 5-star product. Also, there's updates.&rdquo;
+                    </p>
+                    <div class="d-flex">
+                        <img src="{% static '\img\avatars\envato.svg' %}" alt="Themeforest">
+                        <div class="ml-3">
+                            <h6 class="mb-0">agneesh</h6>
+                            <div>Themeforest Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 mb-3 mb-md-4" data-isotope-item="">
+                <div class="card card-body">
+                    <p>&ldquo;Very versatile. Seems like
+                        <mark data-aos='highlight-text' data-aos-delay='200'>you can build most of the stuff out of the
+                            box.
+                        </mark>
+                        Very thoughtful; team must be very experienced in customer stories and their pain points.&rdquo;
+                    </p>
+                    <div class="d-flex">
+                        <img src="{% static '\img\avatars\bootstrap.svg' %}" alt="Bootstrap">
+                        <div class="ml-3">
+                            <h6 class="mb-0">rajasekhar reddy</h6>
+                            <div>Bootstrap Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 mb-3 mb-md-4" data-isotope-item="">
+                <div class="card card-body">
+                    <p>&ldquo;It’s well designed, easy to use and
+                        <mark data-aos='highlight-text' data-aos-delay='200'>very flexible without being bloated.</mark>
+                        Great value for money.&rdquo;
+                    </p>
+                    <div class="d-flex">
+                        <img src="{% static '\img\avatars\bootstrap.svg' %}" alt="Bootstrap">
+                        <div class="ml-3">
+                            <h6 class="mb-0">Paul</h6>
+                            <div>Bootstrap Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="pb-0">
+    <div class="container">
+        <div class="row section-title justify-content-center text-center">
+            <div class="col-md-9 col-lg-8 col-xl-7">
+                <h3 class="display-4">You can be a member here</h3>
+                <div class="lead">Become a member and start detailed comparison.</div>
+            </div>
+        </div>
+        <div class="row justify-content-center text-center mt-md-n4">
+            <div class="col-auto">
+                <a href="https://themeforest.net/item/jumpstart-app-and-software-template/24207799"
+                   class="btn btn-primary btn-lg">Sign up</a>
+            </div>
+        </div>
+    </div>
+    <div class="divider divider-bottom bg-primary-3 mt-5"></div>
+</section>
+
+<footer class="bg-primary-3 text-white links-white pb-4 footer-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-auto mr-xl-5 col-md-3 mb-4 mb-md-0">
+                <h5>Patent</h5>
+                <ul class="nav flex-row flex-md-column">
+                    <li class="nav-item mr-3 mr-md-0">
+                        <a href="landing-1.html" class="nav-link fade-page px-0 py-2">What is a Patent ?</a>
+                    </li>
+                    <li class="nav-item mr-3 mr-md-0">
+                        <a href="landing-2.html" class="nav-link fade-page px-0 py-2">Why should I get a Patent ?</a>
+                    </li>
+                    <li class="nav-item mr-3 mr-md-0">
+                        <a href="landing-3.html" class="nav-link fade-page px-0 py-2">How to Compare Patent Content
+                            ?</a>
+                    </li>
+                    <li class="nav-item mr-3 mr-md-0">
+                        <a href="landing-4.html" class="nav-link fade-page px-0 py-2">Patent Classification</a>
+                    </li>
+                    <li class="nav-item mr-3 mr-md-0">
+                        <a href="landing-5.html" class="nav-link fade-page px-0 py-2">Sample Patent</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <hr>
+            </div>
+        </div>
+        <div class="row flex-column flex-lg-row align-items-center justify-content-center justify-content-lg-between text-center text-lg-left">
+            <div class="col-auto">
+                <div class="d-flex flex-column flex-sm-row align-items-center text-small">
+                    <div class="text-muted">&copy; 2020 Page protected by OSC <a
+                            href="https://www.google.com/policies/privacy/" target="_blank"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto mt-3 mt-lg-0">
+                <ul class="list-unstyled d-flex mb-0">
+                    <li class="mx-3">
+                        <a href="#" class="hover-fade-out">
+                            <img src="{% static '\img\icons\social\dribbble.svg' %}" alt="Dribbble"
+                                 class="icon icon-xs bg-white" data-inject-svg="">
+                        </a>
+                    </li>
+                    <li class="mx-3">
+                        <a href="#" class="hover-fade-out">
+                            <img src="{% static '\img\icons\social\twitter.svg' %}" alt="Twitter"
+                                 class="icon icon-xs bg-white" data-inject-svg="">
+                        </a>
+                    </li>
+                    <li class="mx-3">
+                        <a href="#" class="hover-fade-out">
+                            <img src="{% static '\img\icons\social\github.svg' %}" alt="Github"
+                                 class="icon icon-xs bg-white" data-inject-svg="">
+                        </a>
+                    </li>
+                    <li class="mx-3">
+                        <a href="#" class="hover-fade-out">
+                            <img src="{% static '\img\icons\social\facebook.svg' %}" alt="Facebook"
+                                 class="icon icon-xs bg-white" data-inject-svg="">
+                        </a>
+                    </li>
+                    <li class="mx-3">
+                        <a href="#" class="hover-fade-out">
+                            <img src="{% static '\img\icons\social\google.svg' %}" alt="Google"
+                                 class="icon icon-xs bg-white" data-inject-svg="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="#top" class="btn btn-primary rounded-circle btn-back-to-top" data-smooth-scroll="" data-aos="fade-up"
+   data-aos-offset="2000" data-aos-mirror="true" data-aos-once="false">
+    <img src="{% static '\img\icons\interface\icon-arrow-up.svg' %}" alt="Icon" class="icon bg-white"
+         data-inject-svg="">
+</a>
+<!-- Required vendor scripts (Do not remove) -->
+<script type="text/javascript" src="{% static '\js\jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static '\js\popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static '\js\bootstrap.js' %}"></script>
+
+<!--
+         This appears in the demo only.  This script ensures our demo countdowns are always showing a date in the future
+         by altering the date before the countdown is initialized
+    -->
+<script type="text/javascript">
+    (($) => {
+        var now = new Date;
+        var day = 864e5;
+        var weeksToAdd = 2;
+        var tenWeeksFromNow = new Date(+now + day * 7 * weeksToAdd).toISOString().slice(0, 10).replace(/\-/g, '/');
+        $('[data-countdown-date].add-countdown-time').attr('data-countdown-date', tenWeeksFromNow);
+    })(jQuery);
+</script>
+
+<!-- Optional Vendor Scripts (Remove the plugin script here and comment initializer script out of index.js if site does not use that feature) -->
+
+<!-- AOS (Animate On Scroll - animates elements into view while scrolling down) -->
+<script type="text/javascript" src="{% static '\js\aos.js' %}"></script>
+<!-- Clipboard (copies content from browser into OS clipboard) -->
+<script type="text/javascript" src="{% static '\js\clipboard.min.js' %}"></script>
+<!-- Fancybox (handles image and video lightbox and galleries) -->
+<script type="text/javascript" src="{% static '\js\jquery.fancybox.min.js' %}"></script>
+<!-- Flatpickr (calendar/date/time picker UI) -->
+<script type="text/javascript" src="{% static '\js\flatpickr.min.js' %}"></script>
+<!-- Flickity (handles touch enabled carousels and sliders) -->
+<script type="text/javascript" src="{% static '\js\flickity.pkgd.min.js' %}"></script>
+<!-- Ion rangeSlider (flexible and pretty range slider elements) -->
+<script type="text/javascript" src="{% static '\js\ion.rangeSlider.min.js' %}"></script>
+<!-- Isotope (masonry layouts and filtering) -->
+<script type="text/javascript" src="{% static '\js\isotope.pkgd.min.js' %}"></script>
+<!-- jarallax (parallax effect and video backgrounds) -->
+<script type="text/javascript" src="{% static '\js\jarallax.min.js' %}"></script>
+<script type="text/javascript" src="{% static '\js\jarallax-video.min.js' %}"></script>
+<script type="text/javascript" src="{% static '\js\jarallax-element.min.js' %}"></script>
+<!-- jQuery Countdown (displays countdown text to a specified date) -->
+<script type="text/javascript" src="{% static '\js\jquery.countdown.min.js' %}"></script>
+<!-- jQuery smartWizard facilitates steppable wizard content -->
+<script type="text/javascript" src="{% static '\js\jquery.smartWizard.min.js' %}"></script>
+<!-- Plyr (unified player for Video, Audio, Vimeo and Youtube) -->
+<script type="text/javascript" src="{% static '\js\plyr.polyfilled.min.js' %}"></script>
+<!-- Prism (displays formatted code boxes) -->
+<script type="text/javascript" src="{% static '\js\prism.js' %}"></script>
+<!-- ScrollMonitor (manages events for elements scrolling in and out of view) -->
+<script type="text/javascript" src="{% static '\js\scrollMonitor.js' %}"></script>
+<!-- Smooth scroll (animation to links in-page)-->
+<script type="text/javascript" src="{% static '\js\smooth-scroll.polyfills.min.js' %}"></script>
+<!-- SVGInjector (replaces img tags with SVG code to allow easy inclusion of SVGs with the benefit of inheriting colors and styles)-->
+<script type="text/javascript" src="{% static '\js\svg-injector.umd.production.js' %}"></script>
+<!-- TwitterFetcher (displays a feed of tweets from a specified account)-->
+<script type="text/javascript" src="{% static '\js\twitterFetcher_min.js' %}"></script>
+<!-- Typed text (animated typing effect)-->
+<script type="text/javascript" src="{% static '\js\typed.min.js' %}"></script>
+<!-- Required theme scripts (Do not remove) -->
+<script type="text/javascript" src="{% static '\js\theme.js' %}"></script>
+<!-- This script appears only on the demo.  It is used to delay unnecessary image loading until after the main page content is loaded. -->
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        setTimeout(function () {
+            const delayedImages = document.querySelectorAll('[data-delay-src]');
+            theme.mrUtil.forEach(delayedImages, (index, elem) => {
+                const source = elem.getAttribute('data-delay-src');
+                elem.removeAttribute('data-delay-src');
+                elem.setAttribute('src', source);
+            });
+        }, 500);
+    });
+</script>
+
+<script type="text/javascript">
+    // This script appears only in the demo - it disables forms with no action attribute to prevent
+    // navigating away from the page.
+    jQuery("form:not([action])").on('submit', function () {
+        return false;
+    });
+</script>
+
+</body>
+
+</html>

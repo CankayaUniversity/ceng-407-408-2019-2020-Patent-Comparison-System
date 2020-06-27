@@ -1,0 +1,86 @@
+<html>
+<script>
+    console.log({{ result }})
+</script>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+ <a aria-expanded="false" aria-haspopup="true" class="nav-link nav-item arrow-bottom"
+                               href="{% url 'home_view' %}" role="button">Back</a>
+</head>
+<body style="background: linear-gradient(to bottom, #56ccf2, #2f80ed)">
+<div class="container h-100 align-items-center">
+    <div class="mx-auto text-center">
+        {#        <div id='container'>#}
+        {#            <canvas id='pie-chart'></canvas>#}
+        {#        </div>#}
+        <div class="mx-auto text-center">
+            <svg viewBox="0 0 36 36" class="circular-chart green">
+                <path class="circle-bg"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path class="circle"
+                      stroke-dasharray="520, 100"
+                      d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <text x="18" y="20.35" class="percentage">{{ similarity|stringformat:".2f" }}%</text>
+            </svg>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <table class="table" id="similarity">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% if print %}
+                    {% for res in print %}
+            <tr>
+                        <td>{{ res }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#similarty').DataTable();
+    });
+</script>
+<script>
+    var config = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [{{ similarity|wordwrap:4|safe }}],
+                background: ['#00cc0',],
+            }],
+            label: ['Bert Result',]
+        },
+        options: {
+            responsive: true
+        }
+    };
+    window.onload = function () {
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+        window.newpie = new Chart(ctx, config);
+    };
+
+</script>
+
+</html>
+
